@@ -1,11 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 
 const Root = () => {
+    const navigation = useNavigation
     return (
         <div>
             <Navbar></Navbar>
-            <Outlet></Outlet>
+            {
+                navigation.state === "loading" ? <img className="flex mx-auto" src="/loading.gif" alt="" /> : <Outlet></Outlet>
+            }
         </div>
     );
 };
