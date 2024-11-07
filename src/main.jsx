@@ -10,6 +10,10 @@ import Home from './Home/Home.jsx';
 import Listed_Books from './Listed_Books/Listed_Books.jsx';
 import Pages_Chart from './Pages_To_Read/Pages_Chart.jsx';
 import BookFullDetails from './Book_Full_Details/BookFullDetails.jsx';
+import SignIn from './UserStates/SignIn/SignIn.jsx';
+import SignUp from './UserStates/SignUp/SignUp.jsx';
+import AuthProvider, { AuthContext } from './Provider/AuthProvider.jsx';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 
 
@@ -40,18 +44,22 @@ const router = createBrowserRouter([
       },
       {
         path:'/sign_in',
-        element: <h1>Not created this page</h1> ,
+        element: <SignIn></SignIn> ,
       },
       {
         path:'/sign_up',
-        element: <h1>Not created this page</h1>,
+        element: <SignUp></SignUp>
       },
     ]
   }
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+  <StrictMode baseColor="#313131" highlightColor="#525252">
+    <AuthProvider>
+      <SkeletonTheme>
+        <RouterProvider router={router}></RouterProvider>
+      </SkeletonTheme>
+    </AuthProvider>
   </StrictMode>,
 )

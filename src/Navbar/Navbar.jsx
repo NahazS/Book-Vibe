@@ -1,8 +1,10 @@
 import { NavLink, Link } from "react-router-dom";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 const Navbar = () => {
     const [menu, setMenu] = useState(false)
+    
     return (
         <div className="flex justify-between items-center mt-[54px] max-w-[1170px] mx-auto">
             <Link to={'/'}><h3 className="font-Work_Sans font-bold"><span className="text-[24px] sm:text-[28px]">Book Vibe</span></h3></Link>
@@ -25,8 +27,8 @@ const Navbar = () => {
 
                     </div>
                 </div>
-                <button className="hidden md:flex bg-[#23BE0A] btn-primary">Sign In</button>
-                <button className="hidden md:flex bg-[#59C6D2] btn-primary ">Sign Up</button>
+                <NavLink to={'/sign_in'}><button className="hidden md:flex bg-[#23BE0A] btn-primary">Sign In</button></NavLink>
+                <NavLink to={'/sign_up'}><button className="hidden md:flex bg-[#59C6D2] btn-primary ">Sign Up</button></NavLink>
             </div>
         </div>
     );
