@@ -1,19 +1,32 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { Navigate, useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addReadBook, addWishBook } from "../LocalStorage/localStorage";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 const BookFullDetails = () => {
+    const navigate = useNavigate()
+    const location = useLocation()
     const books = useLoaderData()
     const {bookId} = useParams()
     const selectBook = books.find(book => book.bookId == bookId)
     const {bookName,author,image,review,rating,category,tags,totalPages,publisher,yearOfPublishing} = selectBook
-    
+    const {user} = useContext(AuthContext)
     // add book in localStorage
     const handleRead = () => {
-        addReadBook(bookId)
+        if (user) {
+            addReadBook(bookId);
+        } else {
+            navigate('/sign_in', { state: { from: location.pathname } });
+        }
     }
     const handleWished = () => {
-        addWishBook(bookId)
+        if (user) {
+            addWishBook(bookId);
+        } else {
+
+            navigate('/sign_in', { state: { from: location.pathname } });
+        }
     }
     return (
 

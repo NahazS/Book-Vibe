@@ -1,11 +1,19 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FiEyeOff, FiEye } from "react-icons/fi";
-import { NavLink } from "react-router-dom";
-import Skeleton from "react-loading-skeleton";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import SignInSkeleton from "./SignInSkeleton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = () => {
+    const navigate = useNavigate()
+    const location = useLocation()
+    useEffect(() => {
+      if (location.state) {
+          toast("Please sign in or sign up to add to your list!");
+      }
+    }, []);
     const [showPassword, setShowPassword] = useState(true)
     const handlePasswordToggle = e => {
         e.preventDefault()
@@ -21,7 +29,9 @@ const SignIn = () => {
         const password = e.target.password.value
         signInUser(email, password)
             .then(() => {
-                
+              console.log(location.state)
+              const redirectTo = location.state?.from || '/';
+              navigate(redirectTo);
             })
             .catch(error => {
                 console.log(error.message)
@@ -73,7 +83,9 @@ const SignIn = () => {
       </div>
 
       <button onClick={handleSignOut} className={`${user ? 'flex' : 'hidden'} text-red-600 text-xl mt-6`}>Sign Out ?</button>
+      <ToastContainer />
     </div>
+    
     );
 };
 
